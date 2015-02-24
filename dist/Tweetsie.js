@@ -21,24 +21,31 @@ var Tweetsie = (function () {
   **/
 
   function Tweetsie(opts) {
+    var _this = this;
+
     _classCallCheck(this, Tweetsie);
 
     this.opts = opts;
 
-    // No opts error message
-    if (this.opts === undefined) {
-      this.error("No object was passed to Tweetsie");
-      return;
-    }
+    return new Promise(function (resolve, reject) {
+      _this.resolve = resolve;
+      _this.reject = reject;
 
-    // Not widgetid error message
-    if (this.opts.widgetid === undefined) {
-      this.error("Must pass in a `widgetid`");
-      return;
-    }
+      // No opts error message
+      if (_this.opts === undefined) {
+        _this.error("No object was passed to Tweetsie");
+        return;
+      }
 
-    // Initialize request
-    this.initRequest();
+      // Not widgetid error message
+      if (_this.opts.widgetid === undefined) {
+        _this.error("Must pass in a `widgetid`");
+        return;
+      }
+
+      // Initialize request
+      _this.initRequest();
+    });
   }
 
   _prototypeProperties(Tweetsie, null, {
@@ -50,11 +57,9 @@ var Tweetsie = (function () {
       **/
 
       value: function error(message) {
-        console.log("Tweetsie: " + message);
-
         // Return error message to error callback
-        if (this.opts.error !== undefined) {
-          this.opts.error(message);
+        if (this.reject !== undefined) {
+          this.reject(message);
         }
       },
       writable: true,
@@ -158,14 +163,14 @@ var Tweetsie = (function () {
         // Loop all the tweets
         this.loopTweets();
 
-        // Do the callback!
-        if (this.opts.callback !== undefined) {
-          this.opts.callback(this.tweets);
-        }
-
         // Should Tweetsie parse the template and then create elements based on that?
         if (this.opts.template !== undefined) {
           this.parseTemplate();
+        }
+
+        // Do the callback!
+        if (this.resolve !== undefined) {
+          this.resolve(this.tweets);
         }
       },
       writable: true,

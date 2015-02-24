@@ -32,10 +32,11 @@ new Tweetsie({
   <div class="body"> \
     <p>{{body}}</p> \
   </div> \
-  ',
-  callback: function (tweets) {
+  '
+}).then(function (tweets) {
 
-  }
+}).catch(function (error) {
+
 });
 ```
 
@@ -49,8 +50,8 @@ The above creates a new instance of Tweetsie with all available options being us
 | widgetid  | ID of the widget created on [Twitter](https://twitter.com/settings/widgets) |
 | count     | Number of Tweets to parse. Defaults to all which is 20 |
 | template  | String template used to display on the page |
-| callback  | This is called when Tweetsie has completed parsing all the tweets |
-| error     | Function that is called when any errors occur |
+
+Tweetsie uses ES6 Promises to be super awesome and hip! For older browsers, you will need to use a [Polyfill](https://github.com/jakearchibald/es6-promise).
 
 ## Styling
 
