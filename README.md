@@ -1,4 +1,4 @@
-# Tweetsie
+# Tweetsie [![Build Status](https://travis-ci.org/iamphill/Tweetsie.svg?branch=master)](https://travis-ci.org/iamphill/Tweetsie)
 
 Since Twitter removed access to their API through JS it became harder to get Twitter widgets on your website styled up to how you want. It required backend work which sometimes wasn't possible for several reasons.
 
