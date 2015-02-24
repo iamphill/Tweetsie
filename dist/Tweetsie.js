@@ -27,7 +27,9 @@ var Tweetsie = (function () {
 
     this.opts = opts;
 
-    return new Promise(function (resolve, reject) {
+    var Prom = typeof ES6Promise !== "undefined" ? ES6Promise.Promise : Promise;
+
+    return new Prom(function (resolve, reject) {
       _this.resolve = resolve;
       _this.reject = reject;
 
