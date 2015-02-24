@@ -50,6 +50,7 @@ The above creates a new instance of Tweetsie with all available options being us
 | count     | Number of Tweets to parse. Defaults to all which is 20 |
 | template  | String template used to display on the page |
 | callback  | This is called when Tweetsie has completed parsing all the tweets |
+| error     | Function that is called when any errors occur |
 
 ## Styling
 

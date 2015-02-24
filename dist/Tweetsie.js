@@ -27,7 +27,7 @@ var Tweetsie = (function () {
 
     // No opts error message
     if (this.opts === undefined) {
-      this.error(" No object was passed to Tweetsie");
+      this.error("No object was passed to Tweetsie");
       return;
     }
 
@@ -51,6 +51,11 @@ var Tweetsie = (function () {
 
       value: function error(message) {
         console.log("Tweetsie: " + message);
+
+        // Return error message to error callback
+        if (this.opts.error !== undefined) {
+          this.opts.error(message);
+        }
       },
       writable: true,
       configurable: true
@@ -80,6 +85,10 @@ var Tweetsie = (function () {
         var script = document.createElement("script");
         script.async = true;
         script.src = this.url;
+        script.onload = function () {
+          // Remove script from head
+          document.head.removeChild(script);
+        };
 
         // Attach to the head
         document.head.appendChild(script);
