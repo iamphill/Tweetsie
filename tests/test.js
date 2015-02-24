@@ -2,6 +2,9 @@
   var widgetid = '570149068425674752';
   var WIDGETID_ERROR_MSG = 'Must pass in a `widgetid`';
   var NOT_FOUND_MSG = 'Twitter responded with: Widget configuration is not found.';
+  var CONTAINER_ID = 'tweetsie-container';
+  var NO_CONTAINER = 'No container passed to Tweetsie';
+  var TEMPLATE_EMPTY_MATCHES = 'No variables entered into the template';
 
   test('Tweetsie creation', function (assert) {
     var done = assert.async();
@@ -75,6 +78,56 @@
 
         // Complete!
         done();
+      }
+    });
+  });
+
+  test('Tweet template with empty template', function (assert) {
+    var done = assert.async();
+
+    new Tweetsie({
+      widgetid: widgetid,
+      count: 1,
+      template: '',
+      error: function (msg) {
+        assert.equal(msg, TEMPLATE_EMPTY_MATCHES, 'Template matches found?!');
+        done();
+      }
+    });
+  });
+
+  test('Tweet template without container', function (assert) {
+    var done = assert.async();
+
+    new Tweetsie({
+      widgetid: widgetid,
+      count: 1,
+      template: '{{ body }}',
+      error: function (msg) {
+        assert.equal(msg, NO_CONTAINER, 'Somehow found a container?');
+        done();
+      }
+    });
+  });
+
+  test('Tweet template with container', function (assert) {
+    var done = assert.async();
+    var i = 0;
+
+    new Tweetsie({
+      container: 'tweetsie-container',
+      widgetid: widgetid,
+      count: 1,
+      template: '<p>{{ body }}</p>',
+      callback: function (tweets) {
+        if (i === 0) {
+          setTimeout(function () {
+            var el = document.getElementById(CONTAINER_ID);
+            assert.equal(el.getElementsByTagName('p').length, 1, 'Template didn\'t render right!');
+            done();
+          }, 200);
+        }
+        i++;
       }
     });
   });

@@ -408,6 +408,11 @@ var Tweetsie = (function () {
         var regex = new RegExp(/{{(.*?)}}/g);
         var matches = temp.match(regex);
 
+        if (matches === null) {
+          this.error("No variables entered into the template");
+          return;
+        }
+
         // Loop all tweets
         this.tweets.forEach(function (tweet) {
           var tweethtml = "<div data-tweetsie-id=\"" + tweet.id + "\">" + temp + "</div>";
@@ -489,6 +494,10 @@ var Tweetsie = (function () {
         // Get container
         var container = this.getContainer();
         container.innerHTML = html;
+
+        if (this.opts.callback !== undefined) {
+          this.opts.callback(this.tweets);
+        }
       },
       writable: true,
       configurable: true
