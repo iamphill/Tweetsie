@@ -1,11 +1,21 @@
 {
   "name": "Tweetsie",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/iamphill/Tweetsie",
   "description": "Twitter plugin built with JS! 'cause I mean why the hello not?!",
   "main": "dist/Tweetsie.js",
   "authors": [
     "Phil Hughes <me@iamphill.com>"
+  ],
+  "keywords": [
+    "twitter",
+    "twitter api",
+    "es6",
+    "twitter class",
+    "tweetsie",
+    "tweets",
+    "twitter widget",
+    "tweet widget"
   ],
   "license": "MIT",
   "ignore": [
