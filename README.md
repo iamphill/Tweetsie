@@ -6,6 +6,14 @@ Twitter offers a widget, which is great and works nicely. However, the styling i
 
 However! The Twitter widget simply request a JSON file which contains the body of the widget in. This plugin uses that JSON URL to then allow you to style up how you want!
 
+# Download!
+
+Download now and be awesome! :v:
+
+[Tweetsie.js](dist/Tweetsie.js)
+
+[Tweetsie.min.js](dist/Tweetsie.js)
+
 ## Usage
 
 Before starting, create a new widget on [Twitter](https://twitter.com/settings/widgets). After creating a new widget, in the URL there should be a ID in the URL after saving the widget. Copy this. This becomes the ID Tweetsie needs!

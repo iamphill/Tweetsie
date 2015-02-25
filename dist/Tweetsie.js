@@ -1,3 +1,9 @@
+/**
+ * Tweetsie - Twitter plugin built with JS! 'cause I mean why the hello not?!
+ * @version v0.2.2
+ * @author Phil Hughes <me@iamphill.com>
+ * @license MIT
+ */
 "use strict";
 
 var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
