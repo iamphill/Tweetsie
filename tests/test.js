@@ -118,4 +118,19 @@
       done();
     });
   });
+
+  test('Auto date filter test', function (assert) {
+    var done = assert.async();
+
+    new Tweetsie({
+      container: 'tweetsie-container',
+      widgetid: widgetid,
+      count: 1,
+      template: '<p>{{ date | autodate }}</p>'
+    }).then(function (tweets) {
+      var el = document.getElementById(CONTAINER_ID);
+      assert.equal(el.getElementsByTagName('time').length, 1, 'Template didn\'t render autodate right!');
+      done();
+    });
+  });
 })();

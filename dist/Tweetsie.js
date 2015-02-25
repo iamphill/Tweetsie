@@ -565,7 +565,7 @@ var Tweetsie = (function () {
         } else {
           (function () {
             // Run autodate on an interval
-            var elements = container.querySelectorAll(".tweetsie-auto-date");
+            var elements = _this.getContainer().querySelectorAll(".tweetsie-auto-date");
 
             setInterval(function () {
               for (var i = 0; i < elements.length; i++) {
