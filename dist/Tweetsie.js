@@ -436,15 +436,20 @@ var Tweetsie = (function () {
             var filters = varname.split("|");
 
             // Get the variable value from the tweet
-            var value = eval("tweet[\"" + varname.split("|")[0].trim().split(".").join("\"][\"") + "\"]");
+            var prefilterval = eval("tweet[\"" + varname.split("|")[0].trim().split(".").join("\"][\"") + "\"]");
+            var value = prefilterval;
 
             if (filters.length > 1) {
-              var filter = _this["filter_" + filters[1].trim()];
+              filters.filter(function (filter, i) {
+                return i > 0;
+              }).forEach(function (filter) {
+                var filterfunc = _this["filter_" + filter.trim()];
 
-              // Run the filter!
-              if (filter !== undefined) {
-                value = filter.call(_this, value);
-              }
+                // Run the filter!
+                if (filterfunc !== undefined) {
+                  value = filterfunc.call(_this, prefilterval);
+                }
+              });
             }
 
             if (value !== undefined) {
