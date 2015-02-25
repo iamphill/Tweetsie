@@ -153,4 +153,34 @@
       done();
     });
   });
+
+  test('Saves to cache', function (assert) {
+    var done = assert.async();
+
+    new Tweetsie({
+      widgetid: widgetid
+    }).then(function (tweets) {
+      assert.notEqual(localStorage.getItem('tweetsie-' + widgetid), '', 'Tweets didn\'t save to cache');
+      done();
+    });
+  });
+
+  test('Get from cache', function (assert) {
+    var done = assert.async();
+    var gotten = false;
+    document.getElementById('tweetsie-container').innerHTML = '';
+
+    new Tweetsie({
+      container: 'tweetsie-container',
+      widgetid: widgetid,
+      count: 1,
+      template: '<p>{{ body | test }}</p>',
+      __cacheGet: function () {
+        gotten = (document.getElementById('tweetsie-container').childNodes.length > 0);
+      }
+    }).then(function (tweets) {
+      assert.equal(gotten, true, 'Didn\'t get from cache');
+      done();
+    });
+  });
 })();

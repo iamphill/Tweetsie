@@ -1,6 +1,6 @@
 /**
  * Tweetsie - Twitter plugin built with JS! 'cause I mean why the hello not?!
- * @version v0.3.0
+ * @version v0.4.0
  * @author Phil Hughes <me@iamphill.com>
  * @license MIT
  */
@@ -51,6 +51,9 @@ var Tweetsie = (function () {
         return;
       }
 
+      // Get the current cache and display
+      _this.getCurrentCache();
+
       // Initialize request
       _this.initRequest();
     });
@@ -73,6 +76,47 @@ var Tweetsie = (function () {
       writable: true,
       configurable: true
     },
+    getCurrentCache: {
+
+      /**
+        Get the current value from the cache and then render the body
+      **/
+
+      value: function getCurrentCache() {
+        if (typeof localStorage !== "undefined") {
+          var bodystring = localStorage.getItem("tweetsie-" + this.opts.widgetid);
+
+          if (bodystring !== null && bodystring !== "") {
+            // Parse the body
+            this.parseBody(bodystring);
+
+            // Testing method
+            if (this.opts.__cacheGet !== undefined) {
+              this.opts.__cacheGet();
+            }
+          }
+        }
+      },
+      writable: true,
+      configurable: true
+    },
+    saveCache: {
+
+      /**
+        Store a JSON object into localstorage as a string
+        @param String returned body string
+      **/
+
+      value: function saveCache(body) {
+        if (typeof localStorage !== "undefined") {
+          if (body !== "") {
+            localStorage.setItem("tweetsie-" + this.opts.widgetid, body);
+          }
+        }
+      },
+      writable: true,
+      configurable: true
+    },
     initRequest: {
 
       /**
@@ -80,6 +124,10 @@ var Tweetsie = (function () {
       **/
 
       value: function initRequest() {
+        // Create a random callback name
+        // Based on const
+        this.callbackname = "" + TWITTER_CALLBACK_FUNCTION_NAME + "" + Math.floor(Math.random() * 2000000000);
+
         // Create the Twitter URL
         this.generateUrl();
 
@@ -116,7 +164,7 @@ var Tweetsie = (function () {
       **/
 
       value: function generateUrl() {
-        this.url = "https://cdn.syndication.twimg.com/widgets/timelines/" + this.opts.widgetid + "?suppress_response_codes=true&callback=" + TWITTER_CALLBACK_FUNCTION_NAME;
+        this.url = "https://cdn.syndication.twimg.com/widgets/timelines/" + this.opts.widgetid + "?suppress_response_codes=true&callback=" + this.callbackname;
       },
       writable: true,
       configurable: true
@@ -130,11 +178,14 @@ var Tweetsie = (function () {
       value: function requestCallback() {
         var _this = this;
 
-        window[TWITTER_CALLBACK_FUNCTION_NAME] = function (d) {
+        window["" + this.callbackname] = function (d) {
           // Is this request a 404?
           if (d.headers !== undefined && d.headers.status === 404) {
             _this.notFoundError(d.headers.message);
           } else {
+            // Store in cache
+            _this.saveCache(d.body);
+
             _this.parseBody(d.body);
           }
         };
