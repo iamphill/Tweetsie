@@ -98,7 +98,7 @@ Multiple filters can be used together. The originally value is then passed to th
 
 ##### Custom filters
 
-You can pass your own custom filters by an extra value into the object you pass to Tweetsie. The value should be an object with functions inside of it. The key for the function will be what is used inside the template as your filter name. Case sensitive remember!
+You can pass your own custom filters by adding an extra value into the object you pass to Tweetsie. The value should be an object with functions inside of it. The key for the function will be what is used inside the template as your filter name. Case sensitive remember!
 
 ```javascript
 filters: {
