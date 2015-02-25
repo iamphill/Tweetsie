@@ -447,7 +447,7 @@ var Tweetsie = (function () {
 
                 // Run the filter!
                 if (filterfunc !== undefined) {
-                  value = filterfunc.call(_this, prefilterval);
+                  value = filterfunc.call(_this, prefilterval, false);
                 }
               });
             }
@@ -508,6 +508,11 @@ var Tweetsie = (function () {
         var container = this.getContainer();
         container.innerHTML = html;
 
+        // Should autodate run?
+        if (container.querySelectorAll(".tweetsie-auto-date").length > 0) {
+          this.filter_autodate(null, true);
+        }
+
         if (this.opts.callback !== undefined) {
           this.opts.callback(this.tweets);
         }
@@ -531,23 +536,50 @@ var Tweetsie = (function () {
         @return String HTML Strig
       **/
 
-      value: function filter_autodate(date) {
-        var pad = function (number) {
-          return number < 10 ? "0" + number : number;
-        };
+      value: function filter_autodate(date, run) {
+        var _this = this;
 
-        // Convert date into attributes
-        var time = date.getTime();
-        var formatteddate = "" + date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate()) + "T" + pad(date.getHours()) + ":" + pad(date.getMinutes()) + ":" + pad(date.getSeconds()) + "Z";
+        if (!run) {
+          var pad = function (number) {
+            return number < 10 ? "0" + number : number;
+          };
 
-        // Create the element
-        var timeObj = document.createElement("time");
-        timeObj["class"] = "tweetsie-auto-date";
-        timeObj.setAttribute("datetime", formatteddate);
-        timeObj.setAttribute("data-tweetsie-time", time);
-        timeObj.textContent = this.filter_formatdate(date);
+          // Convert date into attributes
+          var time = date.getTime();
+          var formatteddate = "" + date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate()) + "T" + pad(date.getHours()) + ":" + pad(date.getMinutes()) + ":" + pad(date.getSeconds()) + "Z";
 
-        return timeObj.outerHTML;
+          // Create the element
+          var timeObj = document.createElement("time");
+          timeObj.className = "tweetsie-auto-date";
+          timeObj.setAttribute("datetime", formatteddate);
+          timeObj.setAttribute("data-tweetsie-time", time);
+          timeObj.textContent = this.filter_formatdate(date);
+
+          return timeObj.outerHTML;
+        } else {
+          (function () {
+            // Run autodate on an interval
+            var elements = container.querySelectorAll(".tweetsie-auto-date");
+
+            setInterval(function () {
+              for (var i = 0; i < elements.length; i++) {
+                // Get the current element
+                var el = elements[i];
+
+                // Get the time
+                var _date = new Date(parseInt(el.getAttribute("data-tweetsie-time"), 10));
+
+                // Get the formatted date and only update if any change
+                var formatteddate = _this.filter_formatdate(_date);
+
+                if (formatteddate !== el.textContent) {
+                  console.log("a");
+                  el.textContent = formatteddate;
+                }
+              }
+            }, 1000);
+          })();
+        }
       },
       writable: true,
       configurable: true
