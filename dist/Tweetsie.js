@@ -13,7 +13,7 @@ var TWITTER_CALLBACK_FUNCTION_NAME = "TWEETSIE_CALLBACK";
 var Tweetsie = (function () {
   /**
     Constructor method
-     @param Object opts
+      @param Object opts
       - widgetid
       - count
       - template
@@ -184,7 +184,7 @@ var Tweetsie = (function () {
         Loop all the tweets found
         This then creates an object with the Tweet details
         The object is then added into an array and sent to the callback function
-         If there is a template string, parse it!
+          If there is a template string, parse it!
       **/
 
       value: function loopTweets() {
@@ -413,6 +413,7 @@ var Tweetsie = (function () {
 
         // Get all the handlebars variables inside the template
         var regex = new RegExp(/{{(.*?)}}/g);
+        var bracesRegex = new RegExp(/({{|}})/g);
         var matches = temp.match(regex);
 
         if (matches === null) {
@@ -429,22 +430,10 @@ var Tweetsie = (function () {
             var tmptweet = tweet;
 
             // Get the variable name from the match
-            var varname = match.replace("{{", "");
-            varname = varname.replace("}}", "");
-            varname = varname.trim();
+            var varname = match.replace(bracesRegex, "").trim();
 
             // Get the variable value from the tweet
-            var value = tmptweet[varname];
-
-            // If this is an object inside an object, split on period
-            // Loop through variable names until get value
-            if (varname.split(".").length > 1) {
-              varname.split(".").forEach(function (name) {
-                value = tmptweet[name];
-
-                tmptweet = tmptweet[name];
-              });
-            }
+            var value = eval("tweet[\"" + varname.split(".").join("\"][\"") + "\"]");
 
             if (value !== undefined) {
               // Replace in html
