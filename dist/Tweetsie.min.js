@@ -1,6 +1,6 @@
 /**
  * Tweetsie - Twitter plugin built with JS! 'cause I mean why the hello not?!
- * @version v0.2.2
+ * @version v0.3.0
  * @author Phil Hughes <me@iamphill.com>
  * @license MIT
  */
