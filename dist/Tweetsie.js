@@ -408,6 +408,8 @@ var Tweetsie = (function () {
       **/
 
       value: function parseTemplate() {
+        var _this = this;
+
         var outputhtml = "";
         var temp = this.opts.template;
 
@@ -431,9 +433,19 @@ var Tweetsie = (function () {
 
             // Get the variable name from the match
             var varname = match.replace(bracesRegex, "").trim();
+            var filters = varname.split("|");
 
             // Get the variable value from the tweet
-            var value = eval("tweet[\"" + varname.split(".").join("\"][\"") + "\"]");
+            var value = eval("tweet[\"" + varname.split("|")[0].trim().split(".").join("\"][\"") + "\"]");
+
+            if (filters.length > 1) {
+              var filter = _this["filter_" + filters[1].trim()];
+
+              // Run the filter!
+              if (filter !== undefined) {
+                value = filter(value);
+              }
+            }
 
             if (value !== undefined) {
               // Replace in html
@@ -494,6 +506,36 @@ var Tweetsie = (function () {
         if (this.opts.callback !== undefined) {
           this.opts.callback(this.tweets);
         }
+      },
+      writable: true,
+      configurable: true
+    },
+    filter_auto: {
+
+      /**
+        Below are the filters that can be used inside of the template engine
+        Filters MUST be prefixed with `filter_` and then the name of the filter
+        case sensitive.
+        Remember another person will type this into the template!
+          Filters will take a parameter which is the pre-filtered value
+      **/
+
+      /**
+        Auto date
+        @param String val
+        @return String HTML Strig
+      **/
+
+      value: function filter_auto(date) {
+        var pad = function (number) {
+          return number < 10 ? "0" + number : number;
+        };
+
+        // Convert date into attributes
+        var time = date.getTime();
+        var formatteddate = "" + date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate()) + "T" + pad(date.getHours()) + ":" + pad(date.getMinutes()) + ":" + pad(date.getSeconds()) + "Z";
+
+        return "<time class=\"tweetsie-auto-date\" datetime=\"" + formatteddate + "\" data-tweetsie-time=\"" + time + "\">a</time>";
       },
       writable: true,
       configurable: true

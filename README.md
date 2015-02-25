@@ -73,7 +73,7 @@ These are the keys used for each tweet object.
 
 - `id` Tweet ID
 - `tweet_url` Permalink URL to tweet
-- `data` JS date object
+- `date` JS date object
 - `author.avatar` URL for author profile image
 - `author.profile_url` URL to author Twitter page
 - `author.name` Full name of the author
