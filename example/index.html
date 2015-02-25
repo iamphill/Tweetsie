@@ -12,6 +12,11 @@
     container: '#container',
     widgetid: '570149068425674752',
     count: 5,
+    filters: {
+      testfilter: function (value) {
+        return value.replace('e', '&pound;');
+      }
+    },
     template: ' \
     <div class="author"> \
       <a href="{{author.profile_url}}" target="_blank"> \
@@ -19,7 +24,7 @@
       </a> \
     </div> \
     <div class="body"> \
-      <p>{{body}}</p> \
+      <p>{{body | testfilter}}</p> \
       <span>{{ date | autodate }}</span> \
     </div> \
     '

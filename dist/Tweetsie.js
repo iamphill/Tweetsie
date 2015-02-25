@@ -23,7 +23,7 @@ var Tweetsie = (function () {
       - widgetid
       - count
       - template
-      - callback
+      - filters
   **/
 
   function Tweetsie(opts) {
@@ -454,6 +454,8 @@ var Tweetsie = (function () {
                 // Run the filter!
                 if (filterfunc !== undefined) {
                   value = filterfunc.call(_this, prefilterval, false);
+                } else if (_this.opts.filters !== undefined && _this.opts.filters["" + filter.trim()] !== undefined) {
+                  value = _this.opts.filters["" + filter.trim()].call(_this, prefilterval);
                 }
               });
             }

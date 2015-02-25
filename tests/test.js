@@ -133,4 +133,24 @@
       done();
     });
   });
+
+  test('Custom template filters', function (assert) {
+    var done = assert.async();
+
+    new Tweetsie({
+      container: 'tweetsie-container',
+      widgetid: widgetid,
+      count: 1,
+      filters: {
+        test: function (value) {
+          return 'TEST';
+        }
+      },
+      template: '<p>{{ body | test }}</p>'
+    }).then(function (tweets) {
+      var el = document.getElementById(CONTAINER_ID);
+      assert.equal(el.getElementsByTagName('p')[0].textContent, 'TEST', 'Custom filter failed');
+      done();
+    });
+  });
 })();

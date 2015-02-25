@@ -1,6 +1,6 @@
 {
   "name": "Tweetsie",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Twitter plugin built with JS! 'cause I mean why the hello not?!",
   "scripts": {
     "test": "gulp test"
