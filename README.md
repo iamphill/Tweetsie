@@ -67,6 +67,27 @@ Pass in a string as an option to Tweetsie (See example above).
 
 Tweetsie uses [Handlebar](http://handlebarsjs.com/) style syntax. However, if statements etc. are not supported. It is only used to show where data should be placed.
 
+#### Template filters
+
+Tweetsie makes available a few different filters to make your life easier when working with the template engine. These are:
+
+| Filter Name | Description |
+| ------------|-------------|
+| formatedate | Use this with the `date` value to format the date to a relative time |
+| autodate    | Use this with the `date` value to automatically update the date every 1000ms |
+
+Filers are used in the template engine by doing the following:
+
+```
+{{ value | filter }}
+```
+
+Multiple filters can be used together. The originally value is then passed to the filter, not the previously filtered value.
+
+```
+{{ value | filterone | filtertwo }}
+```
+
 ## Tweet data
 
 These are the keys used for each tweet object.
