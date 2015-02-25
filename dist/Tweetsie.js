@@ -443,7 +443,7 @@ var Tweetsie = (function () {
 
               // Run the filter!
               if (filter !== undefined) {
-                value = filter(value);
+                value = filter.call(_this, value);
               }
             }
 
@@ -510,7 +510,7 @@ var Tweetsie = (function () {
       writable: true,
       configurable: true
     },
-    filter_auto: {
+    filter_autodate: {
 
       /**
         Below are the filters that can be used inside of the template engine
@@ -526,7 +526,7 @@ var Tweetsie = (function () {
         @return String HTML Strig
       **/
 
-      value: function filter_auto(date) {
+      value: function filter_autodate(date) {
         var pad = function (number) {
           return number < 10 ? "0" + number : number;
         };
@@ -540,9 +540,52 @@ var Tweetsie = (function () {
         timeObj["class"] = "tweetsie-auto-date";
         timeObj.setAttribute("datetime", formatteddate);
         timeObj.setAttribute("data-tweetsie-time", time);
-        timeObj.textContent = date;
+        timeObj.textContent = this.filter_formatdate(date);
 
         return timeObj.outerHTML;
+      },
+      writable: true,
+      configurable: true
+    },
+    filter_formatdate: {
+
+      /**
+        Format the date to be relative to current time
+        @param String val
+        @return String formatted date
+      **/
+
+      value: function filter_formatdate(date) {
+        // Convert date into attributes
+        var time = date.getTime();
+        var current = new Date().getTime();
+        var diff = (current - time) / 1000;
+        var daydiff = Math.floor(diff / 86400);
+
+        // Convert to text
+        if (diff < 60) {
+          return "just now";
+        } else if (diff < 120) {
+          return "1 min ago";
+        } else if (diff < 3600) {
+          return "" + Math.floor(diff / 60) + " mins ago";
+        } else if (diff < 7200) {
+          return "1 hour ago";
+        } else if (diff < 86400) {
+          return "" + Math.floor(diff / 3600) + " hours ago";
+        } else if (daydiff === 1) {
+          return "Yesterday";
+        } else if (daydiff < 7) {
+          return "" + daydiff + " days ago";
+        } else if (daydiff === 7) {
+          return "1 week ago";
+        } else if (daydiff < 31) {
+          return "" + Math.ceil(daydiff / 7) + " weeks ago";
+        } else if (daydiff < 365) {
+          return "" + Math.ceil(daydiff / 30) + " months ago";
+        } else {
+          return "A long time ago";
+        }
       },
       writable: true,
       configurable: true
