@@ -12,7 +12,7 @@ Download now and be awesome! :v:
 
 [Tweetsie.js](dist/Tweetsie.js)
 
-[Tweetsie.min.js](dist/Tweetsie.js)
+[Tweetsie.min.js](dist/Tweetsie.min.js)
 
 ## Usage
 
