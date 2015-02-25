@@ -83,6 +83,12 @@ These are the keys used for each tweet object.
 - `actions.favorite` URL to favorite Tweet
 - `actons.retweet` URL to retweet Tweet
 
+# Browser Support
+
+I've run the test on all modern browsers & on IE9.
+
+They all pass :+1:!
+
 # Disclaimer
 
 Whilst I will do my best to keep the plugin updated for any updates Twitter do. This is reliant on Twitter not removing access to Tweet data through the URL used.
