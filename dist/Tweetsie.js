@@ -535,7 +535,14 @@ var Tweetsie = (function () {
         var time = date.getTime();
         var formatteddate = "" + date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate()) + "T" + pad(date.getHours()) + ":" + pad(date.getMinutes()) + ":" + pad(date.getSeconds()) + "Z";
 
-        return "<time class=\"tweetsie-auto-date\" datetime=\"" + formatteddate + "\" data-tweetsie-time=\"" + time + "\">a</time>";
+        // Create the element
+        var timeObj = document.createElement("time");
+        timeObj["class"] = "tweetsie-auto-date";
+        timeObj.setAttribute("datetime", formatteddate);
+        timeObj.setAttribute("data-tweetsie-time", time);
+        timeObj.textContent = date;
+
+        return timeObj.outerHTML;
       },
       writable: true,
       configurable: true
