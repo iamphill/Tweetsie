@@ -6,7 +6,7 @@
  */
 "use strict";
 
-var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
@@ -19,7 +19,7 @@ var TWITTER_CALLBACK_FUNCTION_NAME = "TWEETSIE_CALLBACK";
 var Tweetsie = (function () {
   /**
     Constructor method
-      @param Object opts
+     @param Object opts
       - widgetid
       - count
       - template
@@ -59,7 +59,7 @@ var Tweetsie = (function () {
     });
   }
 
-  _prototypeProperties(Tweetsie, null, {
+  _createClass(Tweetsie, {
     error: {
 
       /**
@@ -72,9 +72,7 @@ var Tweetsie = (function () {
         if (this.reject !== undefined) {
           this.reject(message);
         }
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getCurrentCache: {
 
@@ -96,9 +94,7 @@ var Tweetsie = (function () {
             }
           }
         }
-      },
-      writable: true,
-      configurable: true
+      }
     },
     saveCache: {
 
@@ -113,9 +109,7 @@ var Tweetsie = (function () {
             localStorage.setItem("tweetsie-" + this.opts.widgetid, body);
           }
         }
-      },
-      writable: true,
-      configurable: true
+      }
     },
     initRequest: {
 
@@ -136,9 +130,7 @@ var Tweetsie = (function () {
 
         // Start up the request!
         this.sendRequest();
-      },
-      writable: true,
-      configurable: true
+      }
     },
     sendRequest: {
       value: function sendRequest() {
@@ -153,9 +145,7 @@ var Tweetsie = (function () {
 
         // Attach to the head
         document.head.appendChild(script);
-      },
-      writable: true,
-      configurable: true
+      }
     },
     generateUrl: {
 
@@ -165,9 +155,7 @@ var Tweetsie = (function () {
 
       value: function generateUrl() {
         this.url = "https://cdn.syndication.twimg.com/widgets/timelines/" + this.opts.widgetid + "?suppress_response_codes=true&callback=" + this.callbackname;
-      },
-      writable: true,
-      configurable: true
+      }
     },
     requestCallback: {
 
@@ -189,9 +177,7 @@ var Tweetsie = (function () {
             _this.parseBody(d.body);
           }
         };
-      },
-      writable: true,
-      configurable: true
+      }
     },
     notFoundError: {
 
@@ -201,9 +187,7 @@ var Tweetsie = (function () {
 
       value: function notFoundError(message) {
         this.error("Twitter responded with: " + message);
-      },
-      writable: true,
-      configurable: true
+      }
     },
     parseBody: {
 
@@ -231,9 +215,7 @@ var Tweetsie = (function () {
         if (this.resolve !== undefined) {
           this.resolve(this.tweets);
         }
-      },
-      writable: true,
-      configurable: true
+      }
     },
     loopTweets: {
 
@@ -241,7 +223,7 @@ var Tweetsie = (function () {
         Loop all the tweets found
         This then creates an object with the Tweet details
         The object is then added into an array and sent to the callback function
-          If there is a template string, parse it!
+         If there is a template string, parse it!
       **/
 
       value: function loopTweets() {
@@ -263,9 +245,7 @@ var Tweetsie = (function () {
           };
           this.tweets.push(tweetobject);
         }
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getTweetCountToReturn: {
 
@@ -281,9 +261,7 @@ var Tweetsie = (function () {
         } else {
           return els.length;
         }
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getTweetStream: {
 
@@ -293,9 +271,7 @@ var Tweetsie = (function () {
 
       value: function getTweetStream() {
         this.stream = this.dom.getElementsByClassName("h-feed")[0];
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getAllTweets: {
 
@@ -305,9 +281,7 @@ var Tweetsie = (function () {
 
       value: function getAllTweets() {
         this.alltweets = this.stream.querySelectorAll("li.h-entry");
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getTweetID: {
 
@@ -319,9 +293,7 @@ var Tweetsie = (function () {
 
       value: function getTweetID(el) {
         return el.getAttribute("data-tweet-id");
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getTweetUrl: {
 
@@ -333,9 +305,7 @@ var Tweetsie = (function () {
 
       value: function getTweetUrl(el) {
         return el.querySelectorAll(".u-url")[0].getAttribute("href");
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getTweetDate: {
 
@@ -347,9 +317,7 @@ var Tweetsie = (function () {
 
       value: function getTweetDate(el) {
         return new Date(el.querySelectorAll(".u-url .dt-updated")[0].getAttribute("datetime"));
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getAuthorUsername: {
 
@@ -361,9 +329,7 @@ var Tweetsie = (function () {
 
       value: function getAuthorUsername(el) {
         return el.querySelectorAll(".p-nickname b")[0].innerHTML;
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getAuthorName: {
 
@@ -375,9 +341,7 @@ var Tweetsie = (function () {
 
       value: function getAuthorName(el) {
         return el.querySelectorAll(".full-name .p-name")[0].innerHTML;
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getAuthorUrl: {
 
@@ -389,9 +353,7 @@ var Tweetsie = (function () {
 
       value: function getAuthorUrl(el) {
         return el.querySelectorAll(".u-url.profile")[0].getAttribute("href");
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getAuthorAvatar: {
 
@@ -402,10 +364,8 @@ var Tweetsie = (function () {
       **/
 
       value: function getAuthorAvatar(el) {
-        return el.querySelectorAll(".u-url.profile .avatar")[0].getAttribute("src");
-      },
-      writable: true,
-      configurable: true
+        return el.querySelectorAll(".u-photo.avatar")[0].getAttribute("data-src-1x");
+      }
     },
     getTweetAuthorObject: {
 
@@ -422,9 +382,7 @@ var Tweetsie = (function () {
           name: this.getAuthorName(el),
           username: this.getAuthorUsername(el)
         };
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getTweetBody: {
 
@@ -436,9 +394,7 @@ var Tweetsie = (function () {
 
       value: function getTweetBody(el) {
         return el.querySelectorAll(".e-entry-content .e-entry-title")[0].innerHTML;
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getTweetActions: {
 
@@ -451,12 +407,10 @@ var Tweetsie = (function () {
       value: function getTweetActions(el) {
         return {
           reply: el.querySelectorAll(".reply-action")[0].getAttribute("href"),
-          favorite: el.querySelectorAll(".favorite-action")[0].getAttribute("href"),
+          favorite: el.querySelectorAll(".like-action")[0].getAttribute("href"),
           retweet: el.querySelectorAll(".retweet-action")[0].getAttribute("href")
         };
-      },
-      writable: true,
-      configurable: true
+      }
     },
     parseTemplate: {
 
@@ -522,9 +476,7 @@ var Tweetsie = (function () {
         });
 
         this.appendOutputToContainer(outputhtml);
-      },
-      writable: true,
-      configurable: true
+      }
     },
     getContainer: {
 
@@ -546,9 +498,7 @@ var Tweetsie = (function () {
         } else {
           return this.opts.container;
         }
-      },
-      writable: true,
-      configurable: true
+      }
     },
     appendOutputToContainer: {
 
@@ -575,9 +525,7 @@ var Tweetsie = (function () {
         if (this.opts.callback !== undefined) {
           this.opts.callback(this.tweets);
         }
-      },
-      writable: true,
-      configurable: true
+      }
     },
     filter_autodate: {
 
@@ -586,7 +534,7 @@ var Tweetsie = (function () {
         Filters MUST be prefixed with `filter_` and then the name of the filter
         case sensitive.
         Remember another person will type this into the template!
-          Filters will take a parameter which is the pre-filtered value
+         Filters will take a parameter which is the pre-filtered value
       **/
 
       /**
@@ -639,9 +587,7 @@ var Tweetsie = (function () {
             }, 1000);
           })();
         }
-      },
-      writable: true,
-      configurable: true
+      }
     },
     filter_formatdate: {
 
@@ -682,9 +628,7 @@ var Tweetsie = (function () {
         } else {
           return "A long time ago";
         }
-      },
-      writable: true,
-      configurable: true
+      }
     }
   });
 
